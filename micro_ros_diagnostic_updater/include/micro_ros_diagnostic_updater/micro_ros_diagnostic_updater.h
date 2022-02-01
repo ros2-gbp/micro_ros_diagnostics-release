@@ -19,8 +19,7 @@
 #include <rcl/types.h>
 #include <rclc/publisher.h>
 #include <micro_ros_diagnostic_msgs/msg/micro_ros_diagnostic_status.h>
-
-#define MICRO_ROS_UPDATER_MAX_NUMBER_OF_TASKS 5
+#include "micro_ros_diagnostic_updater/config.h"
 
 typedef struct diagnostic_value_t
 {
@@ -37,15 +36,16 @@ typedef struct diagnostic_task_t
 {
   int16_t id;
   diagnostic_value_t value;
+  int16_t hardware_id;
+  int16_t updater_id;
   rcl_ret_t (* function)(diagnostic_value_t *);
 } diagnostic_task_t;
 
 typedef struct diagnostic_updater_t
 {
   int16_t id;
-  int16_t hardware_id;
   uint8_t num_tasks;
-  diagnostic_task_t * tasks[MICRO_ROS_UPDATER_MAX_NUMBER_OF_TASKS];
+  diagnostic_task_t * tasks[MICRO_ROS_DIAGNOSTIC_UPDATER_MAX_TASKS_PER_UPDATER];
   rcl_publisher_t diag_pub;
   micro_ros_diagnostic_msgs__msg__MicroROSDiagnosticStatus diag_status;
 } diagnostic_updater_t;
@@ -68,15 +68,15 @@ rclc_diagnostic_value_set_level(
 rcl_ret_t
 rclc_diagnostic_task_init(
   diagnostic_task_t * task,
-  int16_t key,
+  int16_t hardware_id,
+  int16_t updater_id,
+  int16_t id,
   rcl_ret_t (* function)(diagnostic_value_t *));
 
 rcl_ret_t
 rclc_diagnostic_updater_init(
   diagnostic_updater_t * updater,
-  const rcl_node_t * node,
-  int16_t id,
-  int16_t hardware_id);
+  const rcl_node_t * node);
 
 rcl_ret_t
 rclc_diagnostic_updater_fini(
