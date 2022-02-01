@@ -4,7 +4,9 @@ General information about this repository, including legal information, build in
 
 micro-ROS diagnostic updater is a [ROS 2](http://www.ros2.org/) package that provides convenience functions to implement diagnostic tasks amd updaters based on the ROS Client C-Library (RCLC) for micro-ROS.
 
-An exemplary implementation can be found in: [example/example_updater.c](example_updater.c)
+An exemplary implementation can be found in: [example/example_updater.c](example_updater.c).
+
+The examples are disabled by default, to build the examples, build with `MICRO_ROS_DIAGNOSTIC_UPDATER_EXAMPLES=ON`
 
 ## Purpose of the Project
 
@@ -18,7 +20,48 @@ standards, e.g., ISO 26262.
 ## How to Build, Test, Install, and Use
 
 After you cloned this repository into your ROS 2 workspace folder, you may build and install it using colcon:
-$ `colcon build --packages-select micro_ros_diagnostic_updater`
+```
+colcon build --packages-select micro_ros_diagnostic_updater
+```
+
+### Modify the namespace for your output topic
+
+By default, the `micro_ros_diagnostic_updater` will output to `<namespace>/diagnostics_uros`. As this could be an inconvenience for your implementation. We provide a CMake build option `MICRO_ROS_DIAGNOSTIC_UPDATER_DIAGNOSTICS_TOPIC_PREFIX` that can be used to modify the topic while building.
+
+Note
+
+        * The topic will always end on diagnostics_uros
+        * It's important that your prefix ends in `/`. Or you'll see `/my/topicdiagnostics_uros`
+        * If your prefix begins with `/` the topic will follow the FQDN rules.
+
+To build with this option allowing the final FQDN to take in the namespace of the node.
+
+```
+colcon build --packages-select micro_ros_diagnostic_updater --cmake-args -DMICRO_ROS_DIAGNOSTIC_UPDATER_DIAGNOSTICS_TOPIC_PREFIX=my/other/namespaces/
+```
+
+To build with this option providing the FQDN
+```
+colcon build --packages-select micro_ros_diagnostic_updater --cmake-args -DMICRO_ROS_DIAGNOSTIC_UPDATER_DIAGNOSTICS_TOPIC_PREFIX=/this/is/final/
+```
+
+### Modify max tasks per updater
+
+By default, the max amount of tasks an updater can have is set to `5`. This number can be too big or too small for some cases. Therefor, we provide a CMake build option `MICRO_ROS_DIAGNOSTIC_UPDATER_MAX_TASKS_PER_UPDATER` to modify such value.
+
+To build with this flag, i.e. with now 8 max tasks per updater.
+
+```
+colcon build --packages-select micro_ros_diagnostic_updater --cmake-args -DMICRO_ROS_DIAGNOSTIC_UPDATER_MAX_TASKS_PER_UPDATER=8
+```
+
+### Build with examples ###
+
+As mentioned, this package does not build the examples by default, to do so, you can build with
+
+```
+colcon build --packages-select micro_ros_diagnostic_updater --cmake-args -DMICRO_ROS_DIAGNOSTIC_UPDATER_EXAMPLES=ON
+```
 
 ## License
 
