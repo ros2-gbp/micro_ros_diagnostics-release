@@ -49,7 +49,9 @@ rclc_diagnostic_value_set_level(
 rcl_ret_t
 rclc_diagnostic_task_init(
   diagnostic_task_t * task,
-  int16_t key,
+  int16_t hardware_id,
+  int16_t updater_id,
+  int16_t id,
   rcl_ret_t (* function)(diagnostic_value_t *))
 {
   RCL_CHECK_FOR_NULL_WITH_MSG(
@@ -57,8 +59,10 @@ rclc_diagnostic_task_init(
   RCL_CHECK_FOR_NULL_WITH_MSG(
     function, "function is a null pointer", return RCL_RET_INVALID_ARGUMENT);
 
-  task->id = key;
+  task->id = id;
   task->function = function;
+  task->updater_id = updater_id;
+  task->hardware_id = hardware_id;
 
   return RCL_RET_OK;
 }
@@ -66,39 +70,32 @@ rclc_diagnostic_task_init(
 rcl_ret_t
 rclc_diagnostic_updater_init(
   diagnostic_updater_t * updater,
-  const rcl_node_t * node,
-  int16_t id,
-  int16_t hardware_id)
+  const rcl_node_t * node)
 {
   RCL_CHECK_FOR_NULL_WITH_MSG(
     updater, "updater is a null pointer", return RCL_RET_INVALID_ARGUMENT);
   RCL_CHECK_FOR_NULL_WITH_MSG(
     node, "node is a null pointer", return RCL_RET_INVALID_ARGUMENT);
 
-  updater->id = id;
-  updater->hardware_id = hardware_id;
   updater->num_tasks = 0;
 
   // publisher
   updater->diag_pub = rcl_get_zero_initialized_publisher();
-  const char * topic_name = "/diagnostics_uros";
   const rosidl_message_type_support_t * diag_type_support =
     ROSIDL_GET_MSG_TYPE_SUPPORT(
     micro_ros_diagnostic_msgs,
     msg,
     MicroROSDiagnosticStatus);
-  rcl_publisher_options_t pub_options = rcl_publisher_get_default_options();
-  rcl_ret_t rc = rcl_publisher_init(
+  rcl_ret_t rc = rclc_publisher_init_default(
     &updater->diag_pub,
     node,
     diag_type_support,
-    topic_name,
-    &pub_options);
+    UROS_DIAGNOSTIC_UPDATER_TOPIC);
   if (RCL_RET_OK != rc) {
     RCUTILS_LOG_ERROR(
       "Updater '%d' could not create publisher /%s.",
       updater->id,
-      topic_name);
+      UROS_DIAGNOSTIC_UPDATER_TOPIC);
     return RCL_RET_ERROR;
   }
 
@@ -121,8 +118,7 @@ rclc_diagnostic_updater_fini(
   rcl_ret_t rc = rcl_publisher_fini(&updater->diag_pub, node);
   if (RCL_RET_OK != rc) {
     RCUTILS_LOG_ERROR(
-      "Error when cleaning updater %d. Could not delete publisher.",
-      updater->id);
+      "Error when cleaning updater. Could not delete publisher.");
     return RCL_RET_ERROR;
   }
 
@@ -139,12 +135,11 @@ rclc_diagnostic_updater_add_task(
   RCL_CHECK_FOR_NULL_WITH_MSG(
     task, "task is a null pointer", return RCL_RET_INVALID_ARGUMENT);
 
-  if (updater->num_tasks >= MICRO_ROS_UPDATER_MAX_NUMBER_OF_TASKS) {
+  if (updater->num_tasks >= MICRO_ROS_DIAGNOSTIC_UPDATER_MAX_TASKS_PER_UPDATER) {
     RCUTILS_LOG_ERROR(
-      "Updater %d could not add task %d, already %d tasks added.",
-      updater->id,
+      "Updater could not add task %d, already %d tasks added.",
       task->id,
-      MICRO_ROS_UPDATER_MAX_NUMBER_OF_TASKS);
+      MICRO_ROS_DIAGNOSTIC_UPDATER_MAX_TASKS_PER_UPDATER);
     return RCL_RET_ERROR;
   }
   updater->tasks[updater->num_tasks] = task;
@@ -167,15 +162,14 @@ rclc_diagnostic_updater_update(
   RCL_CHECK_FOR_NULL_WITH_MSG(
     updater, "updater is a null pointer", return RCL_RET_INVALID_ARGUMENT);
 
-  // name
-  updater->diag_status.updater_id = updater->id;
-  updater->diag_status.hardware_id = updater->hardware_id;
-
   for (unsigned int i = 0; i < updater->num_tasks; ++i) {
     rcl_ret_t task_ok = rclc_diagnostic_call_task(updater->tasks[i]);
 
     if (task_ok == RCL_RET_OK) {
+      // name
+      updater->diag_status.updater_id = updater->tasks[i]->updater_id;
       updater->diag_status.key = updater->tasks[i]->id;
+      updater->diag_status.hardware_id = updater->tasks[i]->hardware_id;
       updater->diag_status.value_type = updater->tasks[i]->value.value_type;
       updater->diag_status.bool_value = updater->tasks[i]->value.bool_value;
       updater->diag_status.int_value = updater->tasks[i]->value.int_value;
@@ -186,14 +180,12 @@ rclc_diagnostic_updater_update(
       rcl_ret_t rc = rcl_publish(&updater->diag_pub, &updater->diag_status, NULL);
       if (rc == RCL_RET_OK) {
         RCUTILS_LOG_DEBUG(
-          "Updater '%d' published value for '%d'.",
-          updater->id,
+          "Updater published value for '%d'.",
           updater->tasks[i]->id);
       }
     } else {
       RCUTILS_LOG_ERROR(
-        "Updater '%d' could not update diagnostic task '%d'.",
-        updater->id,
+        "Updater could not update diagnostic task '%d'.",
         updater->tasks[i]->id);
     }
   }

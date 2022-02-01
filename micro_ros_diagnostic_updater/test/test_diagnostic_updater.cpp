@@ -53,7 +53,7 @@ update_function_mockup_1(diagnostic_value_t * kv)
 
 TEST(TestDiagnosticUpdater, create_diagnostic_task) {
   diagnostic_task_t task;
-  rcl_ret_t rc = rclc_diagnostic_task_init(&task, 0, &update_function_mockup_0);
+  rcl_ret_t rc = rclc_diagnostic_task_init(&task, 0, 0, 0, &update_function_mockup_0);
   EXPECT_EQ(RCL_RET_OK, rc);
 }
 
@@ -100,7 +100,7 @@ TEST(TestDiagnosticUpdater, create_updater) {
 
   // updater
   diagnostic_updater_t updater;
-  rc = rclc_diagnostic_updater_init(&updater, &node, 0, 0);
+  rc = rclc_diagnostic_updater_init(&updater, &node);
   EXPECT_EQ(RCL_RET_OK, rc);
 
   // updater
@@ -122,17 +122,17 @@ TEST(TestDiagnosticUpdater, updater_add_tasks) {
 
   // updater
   diagnostic_updater_t updater;
-  rc = rclc_diagnostic_updater_init(&updater, &node, 0, 0);
+  rc = rclc_diagnostic_updater_init(&updater, &node);
   EXPECT_EQ(RCL_RET_OK, rc);
 
   diagnostic_task_t task;
-  rc = rclc_diagnostic_task_init(&task, 17, &update_function_mockup_0);
+  rc = rclc_diagnostic_task_init(&task, 17, 0, 0, &update_function_mockup_0);
   EXPECT_EQ(RCL_RET_OK, rc);
 
   rc = rclc_diagnostic_updater_add_task(&updater, &task);
   EXPECT_EQ(RCL_RET_OK, rc);
 
-  for (unsigned int i = 1; i < MICRO_ROS_UPDATER_MAX_NUMBER_OF_TASKS; ++i) {
+  for (unsigned int i = 1; i < MICRO_ROS_DIAGNOSTIC_UPDATER_MAX_TASKS_PER_UPDATER; ++i) {
     rc = rclc_diagnostic_updater_add_task(&updater, &task);
     EXPECT_EQ(RCL_RET_OK, rc);
   }
@@ -160,17 +160,17 @@ TEST(TestDiagnosticUpdater, updater_update) {
 
   // updater
   diagnostic_updater_t updater;
-  rc = rclc_diagnostic_updater_init(&updater, &node, 0, 0);
+  rc = rclc_diagnostic_updater_init(&updater, &node);
   EXPECT_EQ(RCL_RET_OK, rc);
 
   diagnostic_task_t task0, task1;
   rc = rclc_diagnostic_task_init(
     &task0,
-    0,
+    0, 0, 0,
     &update_function_mockup_0);
   rc = rclc_diagnostic_task_init(
     &task1,
-    1,
+    0, 0, 1,
     &update_function_mockup_1);
 
   rc = rclc_diagnostic_updater_add_task(&updater, &task0);
