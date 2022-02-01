@@ -76,4 +76,4 @@ tracks:
     ros_distro: rolling
     vcs_type: git
     vcs_uri: https://github.com/micro-ROS/micro_ros_diagnostics.git
-    version: 0.2.0
+    version: 0.3.0
