@@ -1,0 +1,12 @@
+Source: ros-galactic-micro-ros-diagnostic-bridge
+Section: misc
+Priority: optional
+Maintainer: Bartolome Jimenez Vera <bjv@capra.ooo>
+Build-Depends: debhelper (>= 9.0.0), ros-galactic-ament-cmake-gtest, ros-galactic-ament-cmake-ros, ros-galactic-ament-lint-auto, ros-galactic-ament-lint-common, ros-galactic-diagnostic-msgs, ros-galactic-micro-ros-diagnostic-msgs, ros-galactic-osrf-testing-tools-cpp, ros-galactic-rclcpp, ros-galactic-ros-environment, ros-galactic-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-galactic-micro-ros-diagnostic-bridge
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-galactic-diagnostic-msgs, ros-galactic-micro-ros-diagnostic-msgs, ros-galactic-rclcpp, ros-galactic-ros-workspace
+Description: Translates micro-ROS diagnostic messages to vanilla ROS 2 diagnostic messages.
