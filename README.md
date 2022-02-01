@@ -1,3 +1,32 @@
+## micro_ros_diagnostics (rolling) - 0.3.0-1
+
+The packages in the `micro_ros_diagnostics` repository were released into the `rolling` distro by running `/usr/bin/bloom-release --rosdistro rolling --track rolling micro_ros_diagnostics -e` on `Tue, 01 Feb 2022 10:30:05 -0000`
+
+These packages were released:
+- `micro_ros_diagnostic_bridge`
+- `micro_ros_diagnostic_msgs`
+
+These packages were explicitly ignored:
+- `micro_ros_common_diagnostics`
+- `micro_ros_diagnostic_updater`
+
+Version of package(s) in repository `micro_ros_diagnostics`:
+
+- upstream repository: https://github.com/micro-ROS/micro_ros_diagnostics.git
+- release repository: https://github.com/ros2-gbp/micro_ros_diagnostics-release.git
+- rosdistro version: `0.2.0-2`
+- old version: `0.2.0-2`
+- new version: `0.3.0-1`
+
+Versions of tools used:
+
+- bloom version: `0.10.7`
+- catkin_pkg version: `0.4.24`
+- rosdep version: `0.21.0`
+- rosdistro version: `0.8.3`
+- vcstools version: `0.1.42`
+
+
 ## micro_ros_diagnostics (galactic) - 0.3.0-1
 
 The packages in the `micro_ros_diagnostics` repository were released into the `galactic` distro by running `/usr/bin/bloom-release --rosdistro galactic --track galactic micro_ros_diagnostics -e` on `Tue, 01 Feb 2022 10:24:14 -0000`
