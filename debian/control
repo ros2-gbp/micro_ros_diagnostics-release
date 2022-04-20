@@ -1,0 +1,12 @@
+Source: ros-humble-micro-ros-diagnostic-msgs
+Section: misc
+Priority: optional
+Maintainer: Bartolome Jimenez Vera <bjv@capra.ooo>
+Build-Depends: debhelper (>= 9.0.0), ros-humble-ament-cmake, ros-humble-ament-lint-common <!nocheck>, ros-humble-builtin-interfaces, ros-humble-rosidl-default-generators, ros-humble-rosidl-default-runtime, ros-humble-std-msgs, ros-humble-ros-workspace, ros-humble-rosidl-typesupport-fastrtps-c, ros-humble-rosidl-typesupport-fastrtps-cpp
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-humble-micro-ros-diagnostic-msgs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-humble-builtin-interfaces, ros-humble-rosidl-default-runtime, ros-humble-std-msgs, ros-humble-ros-workspace
+Description: Ccontains messages and service definitions for micro-ROS diagnostics.
