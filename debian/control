@@ -1,0 +1,12 @@
+Source: ros-iron-micro-ros-diagnostic-msgs
+Section: misc
+Priority: optional
+Maintainer: Bartolome Jimenez Vera <bjv@capra.ooo>
+Build-Depends: debhelper (>= 9.0.0), ros-iron-ament-cmake, ros-iron-ament-lint-common <!nocheck>, ros-iron-builtin-interfaces, ros-iron-rosidl-default-generators, ros-iron-rosidl-default-runtime, ros-iron-std-msgs, ros-iron-ros-workspace, ros-iron-rosidl-typesupport-fastrtps-c, ros-iron-rosidl-typesupport-fastrtps-cpp
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-iron-micro-ros-diagnostic-msgs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-iron-builtin-interfaces, ros-iron-rosidl-default-runtime, ros-iron-std-msgs, ros-iron-ros-workspace
+Description: Ccontains messages and service definitions for micro-ROS diagnostics.
