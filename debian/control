@@ -1,0 +1,12 @@
+Source: ros-iron-micro-ros-diagnostic-bridge
+Section: misc
+Priority: optional
+Maintainer: Bartolome Jimenez Vera <bjv@capra.ooo>
+Build-Depends: debhelper (>= 9.0.0), ros-iron-ament-cmake-gtest <!nocheck>, ros-iron-ament-cmake-ros, ros-iron-ament-lint-auto <!nocheck>, ros-iron-ament-lint-common <!nocheck>, ros-iron-diagnostic-msgs, ros-iron-diagnostic-msgs <!nocheck>, ros-iron-micro-ros-diagnostic-msgs, ros-iron-micro-ros-diagnostic-msgs <!nocheck>, ros-iron-osrf-testing-tools-cpp <!nocheck>, ros-iron-rclcpp, ros-iron-ros-environment <!nocheck>, ros-iron-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-iron-micro-ros-diagnostic-bridge
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-iron-diagnostic-msgs, ros-iron-micro-ros-diagnostic-msgs, ros-iron-rclcpp, ros-iron-ros-workspace
+Description: Translates micro-ROS diagnostic messages to vanilla ROS 2 diagnostic messages.
