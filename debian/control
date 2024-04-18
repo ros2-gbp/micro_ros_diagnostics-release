@@ -1,0 +1,12 @@
+Source: ros-jazzy-micro-ros-diagnostic-msgs
+Section: misc
+Priority: optional
+Maintainer: Bartolome Jimenez Vera <bjv@capra.ooo>
+Build-Depends: debhelper (>= 9.0.0), ament-cmake, ament-cmake-copyright <!nocheck>, ament-cmake-cppcheck <!nocheck>, ament-cmake-cpplint <!nocheck>, ament-cmake-flake8 <!nocheck>, ament-cmake-lint-cmake <!nocheck>, ament-cmake-pep257 <!nocheck>, ament-cmake-uncrustify <!nocheck>, ament-cmake-xmllint <!nocheck>, libstd-msgs-dev, python3-std-msgs, ros-jazzy-builtin-interfaces, ros-jazzy-rosidl-default-generators, ros-jazzy-rosidl-default-runtime, ros-std-msgs, ros-jazzy-ros-workspace, ros-jazzy-rosidl-typesupport-fastrtps-c, ros-jazzy-rosidl-typesupport-fastrtps-cpp
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-jazzy-micro-ros-diagnostic-msgs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libstd-msgs-dev, python3-std-msgs, ros-jazzy-builtin-interfaces, ros-jazzy-rosidl-default-runtime, ros-std-msgs, ros-jazzy-ros-workspace
+Description: Ccontains messages and service definitions for micro-ROS diagnostics.
