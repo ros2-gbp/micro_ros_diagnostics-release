@@ -1,0 +1,12 @@
+Source: ros-jazzy-micro-ros-diagnostic-bridge
+Section: misc
+Priority: optional
+Maintainer: Bartolome Jimenez Vera <bjv@capra.ooo>
+Build-Depends: debhelper (>= 9.0.0), ament-cmake-copyright <!nocheck>, ament-cmake-cppcheck <!nocheck>, ament-cmake-cpplint <!nocheck>, ament-cmake-flake8 <!nocheck>, ament-cmake-googletest <!nocheck>, ament-cmake-lint-cmake <!nocheck>, ament-cmake-pep257 <!nocheck>, ament-cmake-ros, ament-cmake-uncrustify <!nocheck>, ament-cmake-xmllint <!nocheck>, ament-lint <!nocheck>, libdiagnostic-msgs-dev, libdiagnostic-msgs-dev <!nocheck>, libosrf-testing-tools-cpp-dev <!nocheck>, python3-diagnostic-msgs, python3-diagnostic-msgs <!nocheck>, ros-diagnostic-msgs, ros-diagnostic-msgs <!nocheck>, ros-environment <!nocheck>, ros-jazzy-micro-ros-diagnostic-msgs, ros-jazzy-micro-ros-diagnostic-msgs <!nocheck>, ros-jazzy-rclcpp, ros-jazzy-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-jazzy-micro-ros-diagnostic-bridge
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libdiagnostic-msgs-dev, python3-diagnostic-msgs, ros-diagnostic-msgs, ros-jazzy-micro-ros-diagnostic-msgs, ros-jazzy-rclcpp, ros-jazzy-ros-workspace
+Description: Translates micro-ROS diagnostic messages to vanilla ROS 2 diagnostic messages.
