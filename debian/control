@@ -1,0 +1,12 @@
+Source: ros-kilted-micro-ros-diagnostic-bridge
+Section: misc
+Priority: optional
+Maintainer: Bartolome Jimenez Vera <bjv@capra.ooo>
+Build-Depends: debhelper (>= 9.0.0), ros-kilted-ament-cmake-gtest <!nocheck>, ros-kilted-ament-cmake-ros, ros-kilted-ament-lint-auto <!nocheck>, ros-kilted-ament-lint-common <!nocheck>, ros-kilted-diagnostic-msgs, ros-kilted-diagnostic-msgs <!nocheck>, ros-kilted-micro-ros-diagnostic-msgs, ros-kilted-micro-ros-diagnostic-msgs <!nocheck>, ros-kilted-osrf-testing-tools-cpp <!nocheck>, ros-kilted-rclcpp, ros-kilted-ros-environment <!nocheck>, ros-kilted-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-kilted-micro-ros-diagnostic-bridge
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-kilted-diagnostic-msgs, ros-kilted-micro-ros-diagnostic-msgs, ros-kilted-rclcpp, ros-kilted-ros-workspace
+Description: Translates micro-ROS diagnostic messages to vanilla ROS 2 diagnostic messages.
