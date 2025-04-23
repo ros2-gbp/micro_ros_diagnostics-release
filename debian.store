@@ -1,1 +1,1 @@
-{"base": "556eaf2", "parent": "debian/rolling/micro_ros_diagnostic_msgs", "previous": "85e2ba4", "trim": "", "trimbase": ""}
+{"base": "e93974dff461", "parent": "debian/kilted/micro_ros_diagnostic_msgs", "previous": "56d29358a31d", "trim": "", "trimbase": ""}
